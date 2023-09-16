@@ -22,6 +22,12 @@ class CurrencyConverterMaterialPage extends StatelessWidget {
       //Can also use Colors.<color_name>
       // backgroundColor: Color.fromRGBO(0, 0, 0, 1),
       backgroundColor: Colors.blueGrey,
+      appBar: AppBar(
+        backgroundColor: Colors.blueGrey,
+        elevation: 0,
+        title: const Text("Currency Converter"),
+        centerTitle: true,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
