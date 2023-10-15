@@ -1,11 +1,25 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class CurrencyConverterMaterialPage extends StatelessWidget {
+class CurrencyConverterMaterialPage extends StatefulWidget {
   const CurrencyConverterMaterialPage({super.key});
 
   @override
+  State<CurrencyConverterMaterialPage> createState() =>
+      _CurrencyConverterMaterialPageState();
+}
+
+//content inside State is mutable
+//private class
+class _CurrencyConverterMaterialPageState
+    extends State<CurrencyConverterMaterialPage> {
+  double result = 0;
+  //TextEditingController is kept outside the build(...) function because the build(...) function is called many times, and so we have to keep it as efficient as possible
+  final TextEditingController textEditingController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
+    print("Rebuilt");
     const border = OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.black,
@@ -33,9 +47,9 @@ class CurrencyConverterMaterialPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Text(
-              '0',
-              style: TextStyle(
+            Text(
+              "INR $result",
+              style: const TextStyle(
                 fontSize: 50,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 255, 255, 255),
@@ -43,9 +57,10 @@ class CurrencyConverterMaterialPage extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.all(10.0),
-              child: const TextField(
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
+              child: TextField(
+                controller: textEditingController,
+                style: const TextStyle(color: Colors.black),
+                decoration: const InputDecoration(
                   hintText: "Please enter the amount in INR",
                   hintStyle: TextStyle(
                     color: Colors.black,
@@ -65,7 +80,9 @@ class CurrencyConverterMaterialPage extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   if (kDebugMode) {
-                    print("Button Clicked");
+                    setState(() {
+                      result = double.parse(textEditingController.text) * 81;
+                    });
                   }
                 },
                 style: TextButton.styleFrom(
