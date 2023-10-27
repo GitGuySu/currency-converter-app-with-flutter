@@ -17,9 +17,36 @@ class _CurrencyConverterMaterialPageState
   //TextEditingController is kept outside the build(...) function because the build(...) function is called many times, and so we have to keep it as efficient as possible
   final TextEditingController textEditingController = TextEditingController();
 
+  // void convert() {
+
+  //                 if (kDebugMode) {
+  //                   setState(() {
+  //                     result = double.parse(textEditingController.text) * 81;
+  //                   });
+  // }
+
+  void convert() {
+    
+      result = double.parse(textEditingController.text) * 81;
+      setState(() {});
+    
+  }
+
+    @override
+    void dispose() {
+      textEditingController.dispose();
+      super.dispose();
+    }
+
+    //can also be
+    /*
+    result: double.parse(textEditingController.text)*81;
+    setState(() {})
+    */
+  }
+
   @override
   Widget build(BuildContext context) {
-    print("Rebuilt");
     const border = OutlineInputBorder(
       borderSide: BorderSide(
         color: Colors.black,
@@ -43,21 +70,21 @@ class _CurrencyConverterMaterialPageState
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "INR $result",
-              style: const TextStyle(
-                fontSize: 50,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 255, 255, 255),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "INR ${result != 0 ? result.toStringAsFixed(3) : result.toStringAsFixed(0)}",
+                style: const TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 255, 255, 255),
+                ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10.0),
-              child: TextField(
+              TextField(
                 controller: textEditingController,
                 style: const TextStyle(color: Colors.black),
                 decoration: const InputDecoration(
@@ -74,17 +101,9 @@ class _CurrencyConverterMaterialPageState
                 ),
                 keyboardType: TextInputType.number,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextButton(
-                onPressed: () {
-                  if (kDebugMode) {
-                    setState(() {
-                      result = double.parse(textEditingController.text) * 81;
-                    });
-                  }
-                },
+              const SizedBox(height: 10),
+              TextButton(
+                onPressed: convert,
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
@@ -94,9 +113,9 @@ class _CurrencyConverterMaterialPageState
                   ),
                 ),
                 child: const Text("Convert"),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
