@@ -26,23 +26,27 @@ class _CurrencyConverterMaterialPageState
   // }
 
   void convert() {
-    
-      result = double.parse(textEditingController.text) * 81;
-      setState(() {});
-    
-  }
-
-    @override
-    void dispose() {
-      textEditingController.dispose();
-      super.dispose();
+    if (kDebugMode) {
+      setState(() {
+        result = double.parse(textEditingController.text) * 81;
+      });
     }
-
     //can also be
     /*
     result: double.parse(textEditingController.text)*81;
     setState(() {})
     */
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
   }
 
   @override
